@@ -12,10 +12,10 @@ function Home() {
   });
 const [name, setName] = useState('');
 
-async function obtenerDatos(){
+async function obtenerDatos(name){
   try {
     let respuesta = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=Germany&appid=eef165ef40f4fe4ecd97c931861f1a74&&units=metric`)
+      `https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=eef165ef40f4fe4ecd97c931861f1a74&&units=metric`)
     let datos = await respuesta.json();
     return datos;
   } catch (error){
@@ -23,23 +23,18 @@ async function obtenerDatos(){
   }
 }
 
-useEffect(() => {
-  obtenerDatos().then((res) => {
-    setData({
-      celcius: res.main.temp,
-      name: res.name,
-      humidity: res.main.humidity,
-      speed: res.wind.speed,
-    });
-  });
-}, []);
-
 const handleClick = () =>{
-  if (name!==""){
-    obtenerDatos()
+  if (name !== "") {
+    obtenerDatos(name).then((res) => {
+      setData({
+        celcius: res.main.temp,
+        name: res.name,
+        humidity: res.main.humidity,
+        speed: res.wind.speed,
+      });
+    });
   }
-}
-
+};
   return (
     <div className="container">
       <div className="weather">
