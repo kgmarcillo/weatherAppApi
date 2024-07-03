@@ -10,6 +10,7 @@ function Home() {
     humidity: 10,
     speed: 2,
   });
+const [name, setName] = useState('');
 
 async function obtenerDatos(){
   try {
@@ -33,13 +34,19 @@ useEffect(() => {
   });
 }, []);
 
+const handleClick = () =>{
+  if (name!==""){
+    obtenerDatos()
+  }
+}
+
   return (
     <div className="container">
       <div className="weather">
         <div className="search">
-          <input type="text" placeholder="Enter City Name"/>
+          <input type="text" placeholder="Enter City Name" onChange={(e=> setName(e.target.value))}/>
           <button>
-            <img src="/images/search.png" alt="" />
+            <img src="/images/search.png" alt=""  onClick ={handleClick}  />
           </button>
         </div>
         <div className="winfo">
